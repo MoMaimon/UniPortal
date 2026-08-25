@@ -6,19 +6,27 @@
   "scripts": {
     "dev": "tsx --watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "jest",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:demo": "tsx src/crud.ts"
   },
   "keywords": [],
   "author": "MoMaimon",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@swc/core": "^1.16.1",
+    "@swc/jest": "^0.2.39",
     "@types/node": "^26.3.0",
     "drizzle-kit": "^0.31.10",
+    "jest": "^30.4.2",
     "typescript": "^7.0.2"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
+    "@types/jest": "^30.0.0",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2"
   }

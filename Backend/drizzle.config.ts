@@ -1,15 +1,18 @@
-import "dotenv";
+import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL_UNPOOLED is not set in the .env file");
+const databaseUrl =
+  process.env["DATABASE_URL_UNPOOLED"] || process.env["DATABASE_URL"];
+
+if (!databaseUrl) {
+  throw new Error("Database URL is not set in the .env file");
 }
 
 export default defineConfig({
-  schema: "./src/schema.ts", 
-  out: "./drizzle", 
+  schema: "./src/db/schema",
+  out: "./drizzle",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL,
+    url: databaseUrl,
   },
 });
