@@ -1,5 +1,5 @@
 {
-  "id": "89a40471-6345-452c-ab30-bbfdcf5746e2",
+  "id": "560b1ca6-5173-47e5-a982-0ab842955584",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -70,13 +70,13 @@
         },
         "start_time": {
           "name": "start_time",
-          "type": "integer",
+          "type": "time(0)",
           "primaryKey": false,
           "notNull": true
         },
-        "endTime": {
-          "name": "endTime",
-          "type": "integer",
+        "end_time": {
+          "name": "end_time",
+          "type": "time(0)",
           "primaryKey": false,
           "notNull": true
         },
@@ -132,21 +132,21 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "section_number_unique": {
-          "name": "section_number_unique",
-          "nullsNotDistinct": false,
+      "compositePrimaryKeys": {
+        "section_number_course_code_pk": {
+          "name": "section_number_course_code_pk",
           "columns": [
-            "number"
+            "number",
+            "course_code"
           ]
         }
       },
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {
         "non_negative": {
           "name": "non_negative",
-          "value": "\"section\".\"days\" >= 0 AND \"section\".\"start_time\" >= 0 AND \"section\".\"endTime\" >= 0 AND \"section\".\"number\" >= 0"
+          "value": "\"section\".\"days\" > 0 AND \"section\".\"number\" > 0"
         }
       },
       "isRLSEnabled": false
@@ -208,7 +208,7 @@
       "values": [
         "FTF",
         "online",
-        "hyprid"
+        "hybrid"
       ]
     },
     "public.gender": {

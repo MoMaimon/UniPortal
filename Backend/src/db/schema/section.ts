@@ -3,7 +3,9 @@ import {
   integer,
   pgEnum,
   pgTable,
+  primaryKey,
   text,
+  time,
   uuid,
 } from "drizzle-orm/pg-core";
 import { course } from "./course.js";
@@ -11,12 +13,12 @@ import { teacher } from "./teacher.js";
 import { sql } from "drizzle-orm";
 
 export const status = pgEnum("status", ["open", "closed", "canceled"]);
-export const type = pgEnum("type", ["FTF", "online", "hyprid"]);
+export const type = pgEnum("type", ["FTF", "online", "hybrid"]);
 
 export const section = pgTable(
   "section",
   {
-    number: integer("number").notNull().unique(),
+    number: integer("number").notNull(),
     courseCode: text("course_code")
       .notNull()
       .references(() => course.code),
@@ -24,16 +26,17 @@ export const section = pgTable(
       .notNull()
       .references(() => teacher.id),
     days: integer("days").notNull(),
-    startTime: integer("start_time").notNull(),
-    endTime: integer("endTime").notNull(),
+    startTime: time("start_time", {
+      precision: 0,
+      withTimezone: false,
+    }).notNull(),
+    endTime: time("end_time", { precision: 0, withTimezone: false }).notNull(),
     status: status("status").notNull().default("open"),
     type: type("type").notNull().default("FTF"),
     room: text("room"),
   },
   (table) => [
-    check(
-      "non_negative",
-      sql`${table.days} >= 0 AND ${table.startTime} >= 0 AND ${table.endTime} >= 0 AND ${table.number} >= 0`,
-    ),
+    primaryKey({ columns: [table.number, table.courseCode] }),
+    check("non_negative", sql`${table.days} > 0 AND ${table.number} > 0`),
   ],
 );

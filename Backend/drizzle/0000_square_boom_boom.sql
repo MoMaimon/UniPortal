@@ -1,5 +1,5 @@
 CREATE TYPE "public"."status" AS ENUM('open', 'closed', 'canceled');--> statement-breakpoint
-CREATE TYPE "public"."type" AS ENUM('FTF', 'online', 'hyprid');--> statement-breakpoint
+CREATE TYPE "public"."type" AS ENUM('FTF', 'online', 'hybrid');--> statement-breakpoint
 CREATE TYPE "public"."gender" AS ENUM('male', 'female');--> statement-breakpoint
 CREATE TABLE "course" (
 	"code" text PRIMARY KEY NOT NULL,
@@ -13,13 +13,13 @@ CREATE TABLE "section" (
 	"course_code" text NOT NULL,
 	"teacher_id" uuid NOT NULL,
 	"days" integer NOT NULL,
-	"start_time" integer NOT NULL,
-	"endTime" integer NOT NULL,
+	"start_time" time(0) NOT NULL,
+	"end_time" time(0) NOT NULL,
 	"status" "status" DEFAULT 'open' NOT NULL,
 	"type" "type" DEFAULT 'FTF' NOT NULL,
 	"room" text,
-	CONSTRAINT "section_number_unique" UNIQUE("number"),
-	CONSTRAINT "non_negative" CHECK ("section"."days" >= 0 AND "section"."start_time" >= 0 AND "section"."endTime" >= 0 AND "section"."number" >= 0)
+	CONSTRAINT "section_number_course_code_pk" PRIMARY KEY("number","course_code"),
+	CONSTRAINT "non_negative" CHECK ("section"."days" > 0 AND "section"."number" > 0)
 );
 --> statement-breakpoint
 CREATE TABLE "teacher" (
