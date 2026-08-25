@@ -27,10 +27,9 @@ describe('"getDays" DB util function', () => {
     ]);
   });
 
-  it("return null when day not (1-127)", () => {
-    expect(getDays(0)).toBeNull();
-    expect(getDays(-1)).toBeNull();
-    expect(getDays(128)).toBeNull();
+  it("return empty array if input is not integer", () => {
+    expect(getDays(1.1)).toEqual([]);
+    expect(getDays(127.1)).toEqual([]);
   });
 });
 

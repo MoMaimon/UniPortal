@@ -37,6 +37,9 @@ export const section = pgTable(
   },
   (table) => [
     primaryKey({ columns: [table.number, table.courseCode] }),
-    check("non_negative", sql`${table.days} > 0 AND ${table.number} > 0`),
+    check(
+      "non_negative",
+      sql`${table.days} > 0 AND ${table.days} < 128 AND ${table.number} > 0`,
+    ),
   ],
 );

@@ -7,8 +7,8 @@ function checkDay(days: number, day: Day): boolean {
 export function getDays(days: number): Day[] | null {
   const days_arr: Day[] = [];
 
-  if (days < 1 || days > 127) {
-    return null;
+  if (!Number.isInteger(days)) {
+    return [];
   }
 
   for (const value of Object.values(Day)) {
