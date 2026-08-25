@@ -17,12 +17,12 @@ jobs:
         with:
           node-version: 22
           cache: 'npm' # Use 'yarn' or 'pnpm' if you use those managers
-          cache-dependency-path: 'backend/package-lock.json'
+          cache-dependency-path: 'Backend/package-lock.json'
 
       - name: Install dependencies
         run: npm ci
-        working-directory: backend
+        working-directory: Backend
 
       - name: Run test suite
         run: npm test
-        working-directory: backend
+        working-directory: Backend
