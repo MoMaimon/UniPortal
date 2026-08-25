@@ -2,7 +2,7 @@ import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
 const databaseUrl =
-  process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL;
+  process.env["DATABASE_URL_UNPOOLED"] || process.env["DATABASE_URL"];
 
 if (!databaseUrl) {
   throw new Error("Database URL is not set in the .env file");
